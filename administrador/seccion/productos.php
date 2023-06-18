@@ -120,24 +120,28 @@ $listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
             <form method="POST" enctype="multipart/form-data">      <!--enctype para poder recepcionar archivos-->
                 <div class = "form-group">
                     <label for="txtID">Id</label>
-                    <input type="text" class="form-control" value="<?php echo $txtID;?>" name="txtID" id="txtID" placeholder="ID">
+                    <input type="text" required readonly class="form-control" value="<?php echo $txtID;?>" name="txtID" id="txtID" placeholder="ID">
                 </div>
 
                 <div class="form-group">
                     <label for="txtNombre">Nombre</label>
-                    <input type="text" class="form-control" value="<?php echo $txtNombre;?>" name="txtNombre" id="txtNombre" placeholder="Nombre del libro">
+                    <input type="text" required class="form-control" value="<?php echo $txtNombre;?>" name="txtNombre" id="txtNombre" placeholder="Nombre del libro">
                 </div>
 
                 <div class="form-group">
                     <label for="txtNombre">Imagen: </label>
-                    <?php echo $txtImagen; ?>
-                    <input type="file" class="form-control" name="txtImagen" id="txtImagen" placeholder="Imagen">
+
+                    <br/>
+                    <?php   if($txtImagen!=""){     ?>
+                            <img class="img-thumbnail rounded" src="../../img/<?php echo $txtImagen;?>" width="50" alt="" srcset="">
+                    <?php    }      ?>
+                    <input type="file" required class="form-control" name="txtImagen" id="txtImagen" placeholder="Imagen">
                 </div>
 
                 <div class="btn-group" role="group" aria-label="">
-                    <button type="submit" name="accion" value="Agregar" class="btn btn-success">Agregar</button>
-                    <button type="submit" name="accion" value="Modificar" class="btn btn-warning">Modificar</button>
-                    <button type="submit" name="accion" value="Cancelar" class="btn btn-info">Cancelar</button>
+                    <button type="submit" name="accion" <?php echo($accion=="Seleccionar")?"disabled":"";?> value="Agregar" class="btn btn-success">Agregar</button>
+                    <button type="submit" name="accion" <?php echo($accion!="Seleccionar")?"disabled":"";?> value="Modificar" class="btn btn-warning">Modificar</button>
+                    <button type="submit" name="accion" <?php echo($accion!="Seleccionar")?"disabled":"";?> value="Cancelar" class="btn btn-info">Cancelar</button>       <!--//Botones para hacer una sola opcion, o seleccionar -->
                 </div>
                     
             </form>
@@ -152,7 +156,7 @@ $listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 <div class="col-md-7">
     <table class="table table-bordered">        <!--Se le coloca un borde a la tabla de los elementos que se le inserten-->
         <thead>
-            <tr>
+            <tr> 
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Imagen</th>             <!--Titulos de las columnas-->
@@ -164,7 +168,12 @@ $listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
                 <tr>
                     <td><?php echo $libro['id']; ?></td>                   <!--1eros datos-->
                     <td><?php echo $libro['nombre']; ?></td>
-                    <td><?php echo $libro['imagen']; ?></td>
+
+
+                    <td>
+                        <img class="img-thumbnail rounded" src="../../img/<?php echo $libro['imagen']; ?>" width="50" alt="" srcset="">
+
+                    </td>
                     
                     <td>
 
