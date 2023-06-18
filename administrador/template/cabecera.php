@@ -1,3 +1,16 @@
+<?php 
+    session_start();
+    if(!isset($_SESSION['usuario'])){
+      header("location:../index.php");      //Si no hay usuario logeado, dirigete al index del php, ( el inicio de sesion)
+    }
+    else{
+      if($_SESSION['usuario']=="ok"){
+        $nombreUsuario= $_SESSION["nombreUsuario"];
+      }
+    }
+
+?>
+
 <!doctype html>
 <html lang="en">
   <head>

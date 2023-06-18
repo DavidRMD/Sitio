@@ -3,7 +3,6 @@
 /*print_r($_POST);
 print_r($_FILES);   //<!--para que el formulario acepte fotografias archivos y demas-->
 */      //Validamos que la información del formulario si llega al realizar una accion de los botones
-
 $txtID = (isset($_POST['txtID']))?$_POST['txtID']:"";     //si existe algo en(2do)txtID entonces txtId(1ero) va a ser igual al valor enviado, al txtId(3ro), de lo contrario quedara vacio (comillas)
 $txtNombre = (isset($_POST['txtNombre']))?$_POST['txtNombre']:"";       //Verifica que se envie la informaicón
 $txtImagen = (isset($_FILES['txtImagen']['name']))?$_FILES['txtImagen']['name']:"";
@@ -29,6 +28,8 @@ switch($accion){
 
         $sentenciaSQL->bindParam(':imagen',$nombreArchivo);     //Se escribe en la base de datos con la inf. proporcionada por el usuario
         $sentenciaSQL->execute();
+
+        header("Location:productos.php");
         //echo "Presionado botón agregar";
     break;
 
@@ -62,12 +63,12 @@ switch($accion){
             $sentenciaSQL->bindParam(':id',$txtID);
             $sentenciaSQL->execute();                               //Se actualiza la base de datos con una imagen nueva
         }
-        
-
+        header("Location:productos.php");
     break;
 
     case "Cancelar":
-        echo "Presionado botón cancelar";
+        header("Location:productos.php");       //La instruccion permite limpiar el buscador
+        //echo "Presionado botón cancelar";
     break;
     
     case "Seleccionar":
@@ -98,6 +99,7 @@ switch($accion){
         $sentenciaSQL = $conexion->prepare("DELETE FROM libros WHERE id= :id"); //->Parametros a insertar en la bd 
         $sentenciaSQL->bindParam(':id',$txtID);
         $sentenciaSQL->execute();
+        header("Location: productos.php");
         //echo "Presionado botón Borrar";
     break;
         
@@ -135,7 +137,7 @@ $listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
                     <?php   if($txtImagen!=""){     ?>
                             <img class="img-thumbnail rounded" src="../../img/<?php echo $txtImagen;?>" width="50" alt="" srcset="">
                     <?php    }      ?>
-                    <input type="file" required class="form-control" name="txtImagen" id="txtImagen" placeholder="Imagen">
+                    <input type="file" class="form-control" name="txtImagen" id="txtImagen" placeholder="Imagen">
                 </div>
 
                 <div class="btn-group" role="group" aria-label="">
