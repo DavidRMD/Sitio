@@ -1,27 +1,16 @@
 <?php
-    session_start();
+session_start();
     if($_POST){
-        $sentenciaSQL = $conexion->prepare("SELECT * FROM administradores WHERE usuario= :usuario"); //->Selecciona los registros id con el id que se selecciono       
-        $sentenciaSQL->bindParam(':usuario',$txtUsuario);
-        $sentenciaSQL->bindParam(':contrasenia',$txtContrasenia);
-        $sentenciaSQL->execute();
-        $admin = $sentenciaSQL->fetch(PDO::FETCH_LAZY);
-
-        $txtUsuario= $libro['usuario'];
-        $txtContrasenia= $libro['contrasenia'];
-
-        if(($_POST['usuario']==":usuario") && ($_POST['contrasenia']==":contrasenia")){
-            
+        if(($_POST['usuario']=="develoteca") && ($_POST['contrasenia']=="sistema")){
             $_SESSION['usuario']="ok";
-            $_SESSION['nombreUsuario']="usuario";
-            header("Location:inicio.php");
+            $_SESSION['nombreUsuario']= "develoteca";
+            header("Location:inicio.php");    
         }
         else{
-            $mensaje="Error: El usuario y contraseña son incorrectos";
+            $mensaje="Error: El usuario o contraseña son incorrectos";
         }
     }
 ?>
-
 <!doctype html>
     <html lang="en">
         <head>
@@ -49,20 +38,21 @@
                                 Login
                             </div>
                         <div class="card-body">
+
                             <?php   if(isset($mensaje)){?>
                             <div class="alert alert-danger" role="alert">
-                                <?php echo $mensaje;?>
+                                    <?php echo $mensaje;?>
                             </div>
                             <?php }?>
                             <form method="POST" >
 
                                 <div class = "form-group">
-                                <label>Usuario</label>
+                                <label for="usuario">Usuario</label>
                                 <input type="text" class="form-control" name="usuario" placeholder="Escribe tu usuario">
                                 </div>
 
                                 <div class="form-group">
-                                <label for="exampleInputPassword1">Contraseña</label>
+                                <label for="contrasenia">Contraseña</label>
                                 <input type="password" class="form-control"name="contrasenia" placeholder="Escribe tu contraseña">
                                 </div>
                                 

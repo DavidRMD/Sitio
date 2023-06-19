@@ -3,10 +3,10 @@
 /*print_r($_POST);
 print_r($_FILES);   //<!--para que el formulario acepte fotografias archivos y demas-->
 */      //Validamos que la información del formulario si llega al realizar una accion de los botones
-$txtID = (isset($_POST['txtID']))?$_POST['txtID']:"";     //si existe algo en(2do)txtID entonces txtId(1ero) va a ser igual al valor enviado, al txtId(3ro), de lo contrario quedara vacio (comillas)
-$txtNombre = (isset($_POST['txtNombre']))?$_POST['txtNombre']:"";       //Verifica que se envie la informaicón
-$txtImagen = (isset($_FILES['txtImagen']['name']))?$_FILES['txtImagen']['name']:"";
-$accion = (isset($_POST['accion']))?$_POST['accion']:"";
+$txtID      = (isset($_POST['txtID']))?$_POST['txtID']:"";     //si existe algo en(2do)txtID entonces txtId(1ero) va a ser igual al valor enviado, al txtId(3ro), de lo contrario quedara vacio (comillas)
+$txtNombre  = (isset($_POST['txtNombre']))?$_POST['txtNombre']:"";       //Verifica que se envie la informaicón
+$txtImagen  = (isset($_FILES['txtImagen']['name']))?$_FILES['txtImagen']['name']:"";
+$accion     = (isset($_POST['accion']))?$_POST['accion']:"";
 /*echo $txtID."<br/>";
 echo $txtNombre."<br/>";
 echo $txtImagen."<br/>";

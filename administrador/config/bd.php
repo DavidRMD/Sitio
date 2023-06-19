@@ -10,4 +10,6 @@ try {                   //Prueba de conexion con la base de datos
 } catch (Exception $ex) {
     echo $ex->getMessage();
 }
+
+    $conect= mysqli_connect($host, $usuario, $contrasenia, $bd);
 ?>
