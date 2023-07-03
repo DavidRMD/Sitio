@@ -56,19 +56,19 @@ switch($accion){
                         <div class="card-body">
                             <?php   if(isset($mensaje)){?>
                             <div class="alert alert-danger" role="alert">
-                                    <?php echo $mensaje;?>
+                                <?php echo $mensaje;?>
                             </div>
                             <?php }?>
                             <form method="POST" >
 
                                 <div class = "form-group">
-                                <label for="usuario">Usuario</label>
-                                <input type="text" class="form-control" name="txtusuario" id="txtusuario" placeholder="Escribe tu usuario">
+                                    <label for="usuario">Usuario</label>
+                                    <input type="text" class="form-control" name="txtusuario" id="txtusuario" placeholder="Escribe tu usuario">
                                 </div>
 
                                 <div class="form-group">
-                                <label for="contrasenia">Contraseña</label>
-                                <input type="password" class="form-control" name="txtcontrasenia" id="txtcontrasenia" placeholder="Escribe tu contraseña">
+                                    <label for="contrasenia">Contraseña</label>
+                                    <input type="password" class="form-control" name="txtcontrasenia" id="txtcontrasenia" placeholder="Escribe tu contraseña">
                                 </div>
                                 
                                 <button type="submit" name="accion" class="btn btn-primary" value="entrar" >Entrar al administrador</button>
