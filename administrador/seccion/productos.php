@@ -115,7 +115,7 @@ $listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 
     <div class="card">
         <div class="card-header">
-            Datos de Libro
+            Datos del Producto
         </div>
 
         <div class="card-body">
@@ -127,7 +127,7 @@ $listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 
                 <div class="form-group">
                     <label for="txtNombre">Nombre</label>
-                    <input type="text" required class="form-control" value="<?php echo $txtNombre;?>" name="txtNombre" id="txtNombre" placeholder="Nombre del libro">
+                    <input type="text" required class="form-control" value="<?php echo $txtNombre;?>" name="txtNombre" id="txtNombre" placeholder="Nombre del Producto">
                 </div>
 
                 <div class="form-group">

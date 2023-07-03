@@ -1,11 +1,15 @@
 
-        </div>
-    </div>
-
-    <br><hr></br>
+    <br><hr>
+    <style>
+        footer{
+            text-align: center;
+            background: #EB6864; 
+            padding: 40px;
+        }
+    </style>
     <footer>
-        <img src="http://www.sortek.ca/" width="100" alt="TESIP icon" class="img-tumbnail rounded mx-auto d-block" >
-        <p style="text-align:center; text-decoration-style:solid" class="copyright">&copy Copyright TESIP - 2023</p>
+    <a href="index.php" ><img width="150" src="img/chip.jpg"></a>
+        <p style="color: #FFFFFF; font-size: 13px; margin: 20px;" >&copy Copyright TESIP - 2023</p>
     </footer>
 
 </body>
