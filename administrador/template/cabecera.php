@@ -29,7 +29,7 @@
 
     <nav class="navbar navbar-expand navbar-light bg-light">
         <div class="nav navbar-nav">
-            <a class="nav-item nav-link active" href="#">Administrador del sitio Web <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link active" href="../inicio.php">Administrador del sitio Web <span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" href="<?php echo $url;?>/administrador/inicio.php">Inicio</a>
             <a class="nav-item nav-link" href="<?php echo $url;?>/administrador/seccion/productos.php">Productos</a>
             <a class="nav-item nav-link" href="<?php echo $url;?>/administrador/seccion/cerrar.php">Cerrar Sesion</a>
