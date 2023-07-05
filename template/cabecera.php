@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="../css/cabecera.css"/>
     <link rel="stylesheet" href="../css/estilo.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,300&display=swap" rel="stylesheet">
-
 </head>
 
 <body>
