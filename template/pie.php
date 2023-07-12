@@ -8,7 +8,7 @@
         }
     </style>
     <footer>
-    <a href="index.php" ><img width="150" src="img/chip.jpg"></a>
+    <a href="index.php" ><img width="120" src="img/chip.jpg"></a>
         <p style="color: #FFFFFF; font-size: 13px; margin: 20px;" >&copy Copyright TESIP - 2023</p>
     </footer>
 

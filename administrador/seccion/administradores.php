@@ -7,10 +7,7 @@ print_r($_FILES);   //<!--para que el formulario acepte fotografias archivos y d
 $txtContrasenia = (isset($_POST['txtContrasenia']))?$_POST['txtContrasenia']:"";     //si existe algo en(2do)txtID entonces txtId(1ero) va a ser igual al valor enviado, al txtId(3ro), de lo contrario quedara vacio (comillas)
 $txtNombre      = (isset($_POST['txtNombre']))?$_POST['txtNombre']:"";       //Verifica que se envie la informaicón
 $accion         = (isset($_POST['accion']))?$_POST['accion']:"";
-/*echo $txtID."<br/>";
-echo $txtNombre."<br/>";
-echo $txtImagen."<br/>";
-echo $accion."<br/>";       */ //Verificar que la infocaion si llegue
+
 include('../config/bd.php');
 switch($accion){
     case "Agregar":
@@ -18,13 +15,7 @@ switch($accion){
         $sentenciaSQL = $conexion->prepare("INSERT INTO administradores (usuario, contrasenia) VALUES (:usuario, :contrasenia);"); //->Parametros a insertar en la bd 
         $sentenciaSQL->bindParam(':usuario',$txtNombre);
         $sentenciaSQL->bindParam(':contrasenia',$txtContrasenia);     //Se escribe en la base de datos con la inf. proporcionada por el usuario
-        //$fecha= new DateTime();
-        //$nombreArchivo= ($txtImagen!="")?$fecha->getTimestamp()."_".$_FILES["txtImagen"]["name"]:"imagen.jpg";      //Se genera una instruccion de subida, una foto con una hora, se adjunta la imagen temporal(original), si no esta vacia se mueve a la carpeta del archivo seleccionada
-        //$tmpImagen= $_FILES["txtImagen"]["tmp_name"];
-        //if($tmpImagen!=""){
-        //    move_uploaded_file($tmpImagen,"../../img/".$nombreArchivo);     //Selecionamos donde guardar la imgaen
-        //}
-        //$sentenciaSQL->bindParam(':imagen',$nombreArchivo);     //Se escribe en la base de datos con la inf. proporcionada por el usuario
+    
         $sentenciaSQL->execute();
         header("Location:administradores.php");
         //echo "Presionado botón agregar";
@@ -35,31 +26,11 @@ switch($accion){
         $sentenciaSQL->bindParam(':usuario',$txtNombre);
         $sentenciaSQL->bindParam(':contrasenia',$txtContrasenia);
         $sentenciaSQL->execute();
-        //echo "Presionado botón modificar";
 
         $sentenciaSQL = $conexion->prepare("UPDATE administradores SET contrasenia=:contrasenia WHERE usuario= :usuario"); //->Parametros a insertar en la bd 
         $sentenciaSQL->bindParam(':contrasenia',$txtContrasenia);
         $sentenciaSQL->bindParam(':usuario',$txtNombre);
         $sentenciaSQL->execute();
-        /*if($txtImagen!=""){     //Se valida que haya algo
-            $fecha= new DateTime();
-            $nombreArchivo= ($txtImagen!="")?$fecha->getTimestamp()."_".$_FILES["txtImagen"]["name"]:"imagen.jpg";      //Se genera una instruccion de subida, una foto con una hora, se adjunta la imagen temporal(original), si no esta vacia se mueve a la carpeta del archivo seleccionada
-            $tmpImagen= $_FILES["txtImagen"]["tmp_name"];                   //Se adjuntan los archivos renombrando y trabajando con ellos,
-            move_uploaded_file($tmpImagen,"../../img/".$nombreArchivo);     //Se hace el copiado de los archivos en la carpeta img
-            $sentenciaSQL = $conexion->prepare("SELECT imagen FROM libros WHERE id= :id"); //->Selecciona los registros id con el id que se selecciono
-            $sentenciaSQL->bindParam(':id',$txtID);
-            $sentenciaSQL->execute();
-            $libro = $sentenciaSQL->fetch(PDO::FETCH_LAZY);             //Se busca la imagen para borrar la imagen antigua
-            if(isset($libro["imagen"]) && ($libro["imagen"]!= "imagen.jpg")){
-                if(file_exists("../../img/".$libro["imagen"])){
-                    unlink("../../img/".$libro["imagen"]);              //SE selecciona la imagen a borrar
-                }
-            }
-            $sentenciaSQL = $conexion->prepare("UPDATE libros SET imagen=:imagen WHERE id= :id"); //->Parametros a insertar en la bd 
-            $sentenciaSQL->bindParam(':imagen', $nombreArchivo);
-            $sentenciaSQL->bindParam(':id',$txtID);
-            $sentenciaSQL->execute();                               //Se actualiza la base de datos con una imagen nueva
-        }*/
         header("Location:administradores.php");
     break;
 

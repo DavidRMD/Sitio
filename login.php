@@ -1,4 +1,6 @@
 <?php error_reporting(E_ALL & ~E_WARNING);?>
+<?php $url="http://" .$_SERVER['HTTP_HOST']."/sitioWeb"?>
+
 <?php
 include("administrador/config/bd.php");
 session_start();
@@ -11,7 +13,7 @@ $accion         = (isset($_POST['accion']))?$_POST['accion']:"";
         $txtemail      = $_POST["txtemail"];
         $txtpassword   = $_POST["txtpassword"];
 
-        $sql = "INSERT INTO usuario VALUES('$txtnombre',
+        $sql = "INSERT INTO usuarios VALUES('$txtnombre',
                                             '$txtemail',
                                             '$txtpassword')";
         $ejecutar =mysqli_query($conect, $sql);
@@ -25,7 +27,7 @@ $accion         = (isset($_POST['accion']))?$_POST['accion']:"";
     elseif(isset($_POST['entrar'])){
         $txtnombre      = $_POST["txtnombre"];
         $txtpassword   = $_POST["txtpassword"];
-        $sentenciaSQL = $conexion->prepare("SELECT * FROM usuario WHERE nombre= :nombre");
+        $sentenciaSQL = $conexion->prepare("SELECT * FROM usuarios WHERE nombre= :nombre");
         $sentenciaSQL->bindParam(':nombre',$txtnombre);
         $sentenciaSQL->execute();
         $persona = $sentenciaSQL->fetch(PDO::FETCH_LAZY);
@@ -53,7 +55,7 @@ $accion         = (isset($_POST['accion']))?$_POST['accion']:"";
         <link rel="stylesheet" href="./css/bootstrap.min.css" />
     </head>
     <body>
-    
+        <br><br><hr><br><br><br><hr>
         <div class="container" id="container">
             <div class="form-container sign-up-container">
                 <form class="registro" method="post">
@@ -115,6 +117,18 @@ $accion         = (isset($_POST['accion']))?$_POST['accion']:"";
         });
     </script>
     <br><br><hr><br><br>
+
+    <br><hr>
+    <style>
+        footer{
+            text-align: center;
+            padding: 40px;
+        }
+    </style>
+    <footer>
+    <a href="index.php" ><img width="120" src="img/chip.jpg"></a>
+        <p style="color: #FFFFFF; font-size: 13px; margin: 20px;" >&copy Copyright TESIP - 2023</p>
+    </footer>
         
     </body>
 </html>
