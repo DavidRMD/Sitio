@@ -51,7 +51,7 @@ switch($accion){
                         <br/><br/><br/>
                     <div class="card">
                         <div class="card-header">
-                            Login
+                            <h1 style="text-align: center;" >Login</h1>
                         </div>
                         <div class="card-body">
                             <?php   if(isset($mensaje)){?>
@@ -63,12 +63,12 @@ switch($accion){
 
                                 <div class = "form-group">
                                     <label for="usuario">Usuario</label>
-                                    <input type="text" class="form-control" name="txtusuario" id="txtusuario" placeholder="Escribe tu usuario">
+                                    <input type="text" class="form-control" name="txtusuario" id="txtusuario" placeholder="&#128273; Usuario">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="contrasenia">Contraseña</label>
-                                    <input type="password" class="form-control" name="txtcontrasenia" id="txtcontrasenia" placeholder="Escribe tu contraseña">
+                                    <input type="password" class="form-control" name="txtcontrasenia" id="txtcontrasenia" placeholder="&#128274; Contraseña">
                                 </div>
                                 
                                 <button type="submit" name="accion" class="btn btn-primary" value="entrar" >Entrar al administrador</button>

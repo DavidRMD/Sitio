@@ -1,3 +1,18 @@
+<?php 
+    include("./administrador/config/bd.php");
+    session_start();
+    if(!isset($_SESSION['persona'])){
+        header("location:index.php");      //Si no hay usuario logeado, dirigete al index del php, ( el inicio de sesion)
+      }
+      else{
+        if($_SESSION['persona']=="ok"){
+          $nombreUsuario= $_SESSION["nombrePersona"];
+        }
+      }
+    
+?>
+<?php $url="http://" .$_SERVER['HTTP_HOST']."/sitioWeb"?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,7 +50,8 @@
                 </ul>
                 <form class="d-flex" class="container">
                     <input class="form-control me-sm-2" type="search" placeholder="Buscar">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button>
+                    <button class="btn btn-dark my-2 my-sm-0" type="submit">Buscar</button>
+                    <a name="login" id="login" class="btn btn-info my-2 my-sm-0" href="login.php" role="button"> <?php echo $nombreUsuario; ?></a>
                 </form>
             </div>
         </nav>
