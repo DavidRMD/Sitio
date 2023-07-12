@@ -1,36 +1,6 @@
 <?php include("template/cabecera.php"); ?>
 <?php include("administrador/config/bd.php");?>
 <?php 
-/*
-$txtnombre     = (isset($_POST['txtnombre']))?$_POST['txtnombre']:"";
-$txtemail      = (isset($_POST['txtemail']))?$_POST['txtemail']:"";
-$txttel        = (isset($_POST['txttel']))?$_POST['txttel']:"";
-$txtdia        = (isset($_POST['txtdia']))?$_POST['txtdia']:"";
-$txthora       = (isset($_POST['txthora']))?$_POST['txthora']:"";
-$txtcontacto   = (isset($_POST['txtcontacto']))?$_POST['txtcontacto']:"";
-$txtopcion     = (isset($_POST['txtopcion']))?$_POST['txtopcion']:"";
-$txttexto      = (isset($_POST['txttexto']))?$_POST['txttexto']:"";
-//$txtnovedades  = (isset($_POST['txtnovedades']))?$_POST['txtnovedades']:"";
-$accion        = (isset($_POST['accion']))?$_POST['accion']:"";
-
-    switch($accion){
-        case "enviar":
-            //INSERT INTO `libros` (`id`, `nombre`, `imagen`) VALUES (NULL, 'Libro de php', 'imagen.jpg');
-            $sentenciaSQL = $conexion->prepare("INSERT INTO apartado (nombre, email, tel, dia, hora, contacto, opcion, texto) VALUES (:nombre, :email, :tel, :dia, :hora, :contacto, :opcion, :texto);"); //->Parametros a insertar en la bd 
-            $sentenciaSQL->bindParam(':nombre',$txtnombre);
-            $sentenciaSQL->bindParam(':email',$txtemail);     //Se escribe en la base de datos con la inf. proporcionada por el usuario
-            $sentenciaSQL->bindParam(':tel',$txttel);
-            $sentenciaSQL->bindParam(':dia',$txtdia);
-            $sentenciaSQL->bindParam(':hora',$txthora);
-            $sentenciaSQL->bindParam(':contacto',$txtcontacto);
-            $sentenciaSQL->bindParam(':opcion',$txtopcion);
-            $sentenciaSQL->bindParam(':texto',$txttexto);
-
-            $sentenciaSQL->execute();
-            header("Location:apartado.php");
-            echo "Presionado botón enviar";
-        break;
-    }*/
     if(isset($_POST['enviar'])){
         $nombre     = $_POST["txtnombre"];
         $email      = $_POST["txtemail"];
@@ -40,7 +10,6 @@ $accion        = (isset($_POST['accion']))?$_POST['accion']:"";
         $contacto   = $_POST["txtcontacto"];
         $opcion     = $_POST["txtopcion"];
         $texto      = $_POST["txttexto"];
-
         $sql = "INSERT INTO apartado VALUES('$nombre',
                                         '$email',
                                         '$tel',
@@ -51,13 +20,12 @@ $accion        = (isset($_POST['accion']))?$_POST['accion']:"";
                                         '$texto')";
         $ejecutar =mysqli_query($conect, $sql);
         if(!$ejecutar){
-            //echo  "Hubo un error";
         }
         else{
-            echo '<br><h3 style="text-align:center; border: 5px solid red;">Se han guardado los datos correctamente</h3>';
+            header("Location: lugar.php");
+            //echo '<br><h3 style="text-align:center; border: 5px solid red;">Se han guardado los datos correctamente</h3>';
         }
     }
-
 ?>
 
 <main>
@@ -66,15 +34,13 @@ $accion        = (isset($_POST['accion']))?$_POST['accion']:"";
             <br>
             <div class="row">
                 <div class="jumbotron text-center">
-
                     <br><hr><hr><h1>Sistema de apartado para Espacios de Trabajo</h1><hr><hr><br>
                     <h3>Llena el siguiente formulario con tus datos correctamente.</h3><br><br>
                 </div>
             </div>
         </div>
 
-        <div class="container">
-            <br>
+        <div class="container"><br>
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
@@ -127,7 +93,8 @@ $accion        = (isset($_POST['accion']))?$_POST['accion']:"";
                                     </li>
                                 </ul>
                                 <label class="checkbox"><input type="checkbox" name="novedades" checked>¿Le gustaria recibir novedades de TESIP?</label><br><br>
-                                <input type="submit" name="enviar" value="Enviar Formulario" class="btn btn-success" onclick="return ConfirmDelete()">
+                                <input type="submit" name="enviar" value="Enviar Formulario" class="btn btn-danger">
+                                <button type="submit" name="enviar" href="/seccion/lugar.php" class="btn btn-success">Enviar fomulario</button>
                             </form>
                         </div>                       
                     </div>
@@ -148,7 +115,5 @@ $accion        = (isset($_POST['accion']))?$_POST['accion']:"";
         </div>          
     </section>
 </main>
-
-
 
 <?php include("template/pie.php"); ?>

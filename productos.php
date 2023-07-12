@@ -2,14 +2,12 @@
 
 <?php 
 include("administrador/config/bd.php");
-
 $sentenciaSQL = $conexion->prepare("SELECT * FROM libros");
 $sentenciaSQL->execute();
 $listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <script>
-
     const btnAbrirModal = document.querySelector("#btn-abrir-modal");
     const btnCerrarModal =document.querySelector("#btn-cerrar-modal");
     const modal =document.querySelector("#modal");
@@ -20,9 +18,7 @@ $listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
     btnCerrarModal.addEventListener("click", ()=>{
         modal.close();
     })
-
 </script>
-
 
 <section class="informacion">
     <div class="container">
@@ -58,11 +54,8 @@ $listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
     <h2 style="text-align: center;">Espacios y Áreas de trabajo</h2><br></br>
     <img width="400" class="img-tumbnail rounded mx-auto d-block" src="./img/espacios.jpg"  alt="Espacios de Trabajo"><br>
 
-    <h3 style="text-align: center">Escoge entre nuestros diferentes espacios para trabajar</h3>
-        <br>
-        
+    <h3 style="text-align: center">Escoge entre nuestros diferentes espacios para trabajar</h3><br>
         <div class="row">
-            
             <div class="col-md-4">
                 <div class="card">
                     <br><h3 style="text-align: center">Espacio1 - GrupoE</h3><hr>
@@ -107,12 +100,10 @@ $listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 
 <section class="productos">
     <div class="container">
-
     <h2 style="text-align: center;">Componentes electronicos</h2><br></br>
         <h3 style="text-align: center">Escoge los productos que necesitas de nuestra gran variedad de componentes electronicos</h3><br><br>
         <div class="row">
             <?php foreach($listaLibros as $libro){  ?>
-
                 <div class="col-md-3">
                     <div class="card">
                         <img class="card-img-top" src="./img/<?php echo $libro['imagen'];?>" alt="">
@@ -126,5 +117,4 @@ $listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 </section>
-
 <?php include("template/pie.php"); ?>

@@ -25,14 +25,14 @@ $accion         = (isset($_POST['accion']))?$_POST['accion']:"";
         }
     }
     elseif(isset($_POST['entrar'])){
-        $txtnombre      = $_POST["txtnombre"];
-        $txtpassword   = $_POST["txtpassword"];
+        $txtnombre    = $_POST["txtnombre"];
+        $txtpassword  = $_POST["txtpassword"];
         $sentenciaSQL = $conexion->prepare("SELECT * FROM usuarios WHERE nombre= :nombre");
         $sentenciaSQL->bindParam(':nombre',$txtnombre);
         $sentenciaSQL->execute();
         $persona = $sentenciaSQL->fetch(PDO::FETCH_LAZY);
-        $txtnombre       = $persona['nombre'];
-        $txtpassword    = $persona['password'];
+        $txtnombre   = $persona['nombre'];
+        $txtpassword = $persona['password'];
 
         if($_POST){
             if(($_POST['txtnombre']== $txtnombre) && ($_POST['txtpassword']== $txtpassword)){
