@@ -63,7 +63,7 @@ $listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
                     <div class="card-body">
                         <h4 class="card-title">Grupo E1 - para grupos de más de 6 personas.</h4><br>
                         <h5 class="card-title">Espacio de trabajo amplio, ideal para equipos/grupos grandes.</h5>
-                        <a name="+info" id="+info" class="btn btn-info" href="https://github.com/" onclick="window.open(this.href, 'new', 'popup'); return false;" role="button" style="padding: 12px 18px 11px 18px;"><h5><strong>Ver más</strong></h5></a>
+                        <a name="+info" id="+info" class="btn btn-info" href="template/espacio1.html" onclick="window.open(this.href, 'new', 'popup'); return false;" role="button" style="padding: 12px 18px 11px 18px;"><h5><strong>Ver más</strong></h5></a>
                         <a name="apartar" id="apartar" class="btn btn-success" href="./apartado.php" target="_blank" role="button" style="padding: 12px 18px 11px 18px;"><h5><strong>Apartar</strong></h5></a>
                     </div>
                 </div> 
