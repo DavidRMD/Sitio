@@ -45,7 +45,7 @@
                 <form class="d-flex" class="container">
                     <input class="form-control me-sm-2" type="search" placeholder="Buscar">
                     <button class="btn btn-light my-2 my-sm-0" type="submit"><img width="20" src="img/buscar.jpg"></button>
-                    <a name="login" id="login" href="login.php" style="padding: 10px 25px 0px 25px;" ><img width="25" src="img/usuario.jpg"> <?php echo $nombrePersona; ?></a>
+                    <a name="login" id="login" href="login.php" style="padding: 10px 25px 0px 25px; color:ghostwhite;" ><img width="25" src="img/usuario.jpg"> <?php echo $nombrePersona; ?></a>
                     <a name="cerrado" id="cerrado" class="btn btn-dark my-2" href="<?php echo $url;?>/template/close.php" role="button">LogOut</a>
                 </form>
             </div>
