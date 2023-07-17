@@ -93,7 +93,6 @@
                                     </li>
                                 </ul>
                                 <label class="checkbox"><input type="checkbox" name="novedades" checked>¿Le gustaria recibir novedades de TESIP?</label><br><br>
-                                <input type="submit" name="enviar" value="Enviar Formulario" class="btn btn-danger">
                                 <button type="submit" name="enviar" href="/seccion/lugar.php" class="btn btn-success">Enviar fomulario</button>
                             </form>
                         </div>                       

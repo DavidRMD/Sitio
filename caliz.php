@@ -2,9 +2,9 @@
 
 <?php 
 include("administrador/config/bd.php");
-$sentenciaSQL = $conexion->prepare("SELECT * FROM productos");
+$sentenciaSQL = $conexion->prepare("SELECT * FROM libros");
 $sentenciaSQL->execute();
-$listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+$listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <script>
@@ -103,13 +103,12 @@ $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
     <h2 style="text-align: center;">Componentes electronicos</h2><br></br>
         <h3 style="text-align: center">Escoge los productos que necesitas de nuestra gran variedad de componentes electronicos</h3><br><br>
         <div class="row">
-            <?php foreach($listaProductos as $productos){  ?>
+            <?php foreach($listaLibros as $libro){  ?>
                 <div class="col-md-3">
                     <div class="card">
-                        <img class="card-img-top" src="./img/<?php echo $productos['imagen'];?>" alt="producto"">
+                        <img class="card-img-top" src="./img/<?php echo $libro['imagen'];?>" alt="">
                         <div class="card-body">
-                            <h4 class="card-title">     <?php echo $productos['nombre'];?>   </h4>
-                            <h4 class="card-title">     <?php echo $productos['precio'];?>   </h4>
+                            <h4 class="card-title">     <?php echo $libro['nombre'];?>   </h4>
                             <a name="" id="" class="btn btn-primary" href="item.php" role="button">Ver más</a>
                         </div>                       
                     </div>

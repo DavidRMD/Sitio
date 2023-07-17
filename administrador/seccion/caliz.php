@@ -17,7 +17,7 @@ include('../config/bd.php');
 switch($accion){
     case "Agregar":
         //INSERT INTO `libros` (`id`, `nombre`, `imagen`) VALUES (NULL, 'Libro de php', 'imagen.jpg');
-        $sentenciaSQL = $conexion->prepare("INSERT INTO productos (nombre, imagen, precio) VALUES (:nombre, :imagen, :precio);"); //->Parametros a insertar en la bd 
+        $sentenciaSQL = $conexion->prepare("INSERT INTO libros (nombre, imagen) VALUES (:nombre, :imagen);"); //->Parametros a insertar en la bd 
         $sentenciaSQL->bindParam(':nombre',$txtNombre);
 
         $fecha= new DateTime();
@@ -29,15 +29,14 @@ switch($accion){
         }
 
         $sentenciaSQL->bindParam(':imagen',$nombreArchivo);     //Se escribe en la base de datos con la inf. proporcionada por el usuario
-        $sentenciaSQL->bindParam(':precio', $txtPrecio);
         $sentenciaSQL->execute();
 
-        header("Location:productos1.php");
+        header("Location:productos.php");
         //echo "Presionado botón agregar";
     break;
 
     case "Modificar":
-        $sentenciaSQL = $conexion->prepare("UPDATE productos SET nombre=:nombre WHERE id= :id"); //->Parametros a insertar en la bd 
+        $sentenciaSQL = $conexion->prepare("UPDATE libros SET nombre=:nombre WHERE id= :id"); //->Parametros a insertar en la bd 
         $sentenciaSQL->bindParam(':nombre',$txtNombre);
         $sentenciaSQL->bindParam(':id',$txtID);
         $sentenciaSQL->execute();
@@ -49,74 +48,68 @@ switch($accion){
             $tmpImagen= $_FILES["txtImagen"]["tmp_name"];                   //Se adjuntan los archivos renombrando y trabajando con ellos,
             move_uploaded_file($tmpImagen,"../../img/".$nombreArchivo);     //Se hace el copiado de los archivos en la carpeta img
             
-            $sentenciaSQL = $conexion->prepare("SELECT imagen FROM productos WHERE id= :id"); //->Selecciona los registros id con el id que se selecciono
+            $sentenciaSQL = $conexion->prepare("SELECT imagen FROM libros WHERE id= :id"); //->Selecciona los registros id con el id que se selecciono
             $sentenciaSQL->bindParam(':id',$txtID);
             $sentenciaSQL->execute();
             $libro = $sentenciaSQL->fetch(PDO::FETCH_LAZY);             //Se busca la imagen para borrar la imagen antigua
 
             
-            if(isset($producto["imagen"]) && ($producto["imagen"]!= "imagen.jpg")){
-                if(file_exists("../../img/".$producto["imagen"])){
-                    unlink("../../img/".$producto["imagen"]);              //SE selecciona la imagen a borrar
+            if(isset($libro["imagen"]) && ($libro["imagen"]!= "imagen.jpg")){
+                if(file_exists("../../img/".$libro["imagen"])){
+                    unlink("../../img/".$libro["imagen"]);              //SE selecciona la imagen a borrar
                 }
             }
 
-            $sentenciaSQL = $conexion->prepare("UPDATE productos SET imagen=:imagen WHERE id= :id"); //->Parametros a insertar en la bd 
+            $sentenciaSQL = $conexion->prepare("UPDATE libros SET imagen=:imagen WHERE id= :id"); //->Parametros a insertar en la bd 
             $sentenciaSQL->bindParam(':imagen', $nombreArchivo);
             $sentenciaSQL->bindParam(':id',$txtID);
             $sentenciaSQL->execute();                               //Se actualiza la base de datos con una imagen nueva
-
-            $sentenciaSQL = $conexion->prepare("UPDATE productos SET precio=:precio WHERE id= :id"); //->Parametros a insertar en la bd 
-            $sentenciaSQL->bindParam(':precio', $txtPrecio);
-            $sentenciaSQL->bindParam(':id',$txtID);
-            $sentenciaSQL->execute();  
         }
-        header("Location:productos1.php");
+        header("Location:productos.php");
     break;
 
     case "Cancelar":
-        header("Location:productos1.php");       //La instruccion permite limpiar el buscador
+        header("Location:productos.php");       //La instruccion permite limpiar el buscador
         //echo "Presionado botón cancelar";
     break;
     
     case "Seleccionar":
-        $sentenciaSQL = $conexion->prepare("SELECT * FROM productos WHERE id= :id"); //->Selecciona los registros id con el id que se selecciono
+        $sentenciaSQL = $conexion->prepare("SELECT * FROM libros WHERE id= :id"); //->Selecciona los registros id con el id que se selecciono
         $sentenciaSQL->bindParam(':id',$txtID);
         $sentenciaSQL->execute();
-        $producto = $sentenciaSQL->fetch(PDO::FETCH_LAZY);
+        $libro = $sentenciaSQL->fetch(PDO::FETCH_LAZY);
 
-        $txtNombre= $producto['nombre'];
-        $txtImagen= $producto['imagen'];
-        $txtPrecio= $producto['precio'];
+        $txtNombre= $libro['nombre'];
+        $txtImagen= $libro['imagen'];
         //echo "Presionado botón Seleccionar";
     break;
 
     case "Borrar":
 
-        $sentenciaSQL = $conexion->prepare("SELECT imagen FROM productos WHERE id= :id"); //->Selecciona los registros id con el id que se selecciono
+        $sentenciaSQL = $conexion->prepare("SELECT imagen FROM libros WHERE id= :id"); //->Selecciona los registros id con el id que se selecciono
         $sentenciaSQL->bindParam(':id',$txtID);
         $sentenciaSQL->execute();
-        $producto = $sentenciaSQL->fetch(PDO::FETCH_LAZY);
+        $libro = $sentenciaSQL->fetch(PDO::FETCH_LAZY);
 
         
-        if(isset($producto["imagen"]) && ($producto["imagen"]!= "imagen.jpg")){
-            if(file_exists("../../img/".$producto["imagen"])){
-                unlink("../../img/".$producto["imagen"]);            
+        if(isset($libro["imagen"]) && ($libro["imagen"]!= "imagen.jpg")){
+            if(file_exists("../../img/".$libro["imagen"])){
+                unlink("../../img/".$libro["imagen"]);            
             }
         }
 
-        $sentenciaSQL = $conexion->prepare("DELETE FROM productos WHERE id= :id"); //->Parametros a insertar en la bd 
+        $sentenciaSQL = $conexion->prepare("DELETE FROM libros WHERE id= :id"); //->Parametros a insertar en la bd 
         $sentenciaSQL->bindParam(':id',$txtID);
         $sentenciaSQL->execute();
-        header("Location: productos1.php");
+        header("Location: productos.php");
         //echo "Presionado botón Borrar";
     break;
         
 }
 
-$sentenciaSQL = $conexion->prepare("SELECT * FROM Productos");
+$sentenciaSQL = $conexion->prepare("SELECT * FROM libros");
 $sentenciaSQL->execute();
-$listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+$listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -137,11 +130,6 @@ $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
                 <div class="form-group">
                     <label for="txtNombre">Nombre</label>
                     <input type="text" required class="form-control" value="<?php echo $txtNombre;?>" name="txtNombre" id="txtNombre" placeholder="Nombre del Producto">
-                </div>
-
-                <div class="form-group">
-                    <label for="txtPrecio">Precio</label>
-                    <input type="text" required class="form-control" value="<?php echo $txtPrecio;?>" name="txtPrecio" id="txtPrecio" placeholder="Precio del Producto">
                 </div>
 
                 <div class="form-group">
@@ -176,26 +164,25 @@ $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Imagen</th>             <!--Titulos de las columnas-->
-                <th>Precio</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach($listaProductos as $producto) { ?>
+            <?php foreach($listaLibros as $libro) { ?>
                 <tr>
-                    <td><?php echo $producto['id']; ?></td>                   <!--1eros datos-->
-                    <td><?php echo $producto['nombre']; ?></td>
+                    <td><?php echo $libro['id']; ?></td>                   <!--1eros datos-->
+                    <td><?php echo $libro['nombre']; ?></td>
 
 
                     <td>
-                        <img class="img-thumbnail rounded" src="../../img/<?php echo $producto['imagen']; ?>" width="50" alt="" srcset="">
+                        <img class="img-thumbnail rounded" src="../../img/<?php echo $libro['imagen']; ?>" width="50" alt="" srcset="">
 
                     </td>
-                    <td><?php echo $producto['precio'];?></td>                    
+                    
                     <td>
 
                         <form method="post">
-                            <input type="hidden" name="txtID" id="txtID" value="<?php echo $producto['id']; ?>">
+                            <input type="hidden" name="txtID" id="txtID" value="<?php echo $libro['id']; ?>">
                             
                             <input name="accion" class="btn btn-primary" type="submit" value="Seleccionar">
                             <input name="accion" class="btn btn-danger" type="submit" value="Borrar">
