@@ -32,7 +32,7 @@ switch($accion){
         $sentenciaSQL->bindParam(':precio', $txtPrecio);
         $sentenciaSQL->execute();
 
-        header("Location:productos1.php");
+        header("Location:productos.php");
         //echo "Presionado botón agregar";
     break;
 
@@ -71,11 +71,11 @@ switch($accion){
             $sentenciaSQL->bindParam(':id',$txtID);
             $sentenciaSQL->execute();  
         }
-        header("Location:productos1.php");
+        header("Location:productos.php");
     break;
 
     case "Cancelar":
-        header("Location:productos1.php");       //La instruccion permite limpiar el buscador
+        header("Location:productos.php");       //La instruccion permite limpiar el buscador
         //echo "Presionado botón cancelar";
     break;
     
@@ -108,10 +108,9 @@ switch($accion){
         $sentenciaSQL = $conexion->prepare("DELETE FROM productos WHERE id= :id"); //->Parametros a insertar en la bd 
         $sentenciaSQL->bindParam(':id',$txtID);
         $sentenciaSQL->execute();
-        header("Location: productos1.php");
+        header("Location: productos.php");
         //echo "Presionado botón Borrar";
-    break;
-        
+    break;    
 }
 
 $sentenciaSQL = $conexion->prepare("SELECT * FROM Productos");
@@ -133,38 +132,30 @@ $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
                     <label for="txtID">Id</label>
                     <input type="text" required readonly class="form-control" value="<?php echo $txtID;?>" name="txtID" id="txtID" placeholder="ID">
                 </div>
-
                 <div class="form-group">
                     <label for="txtNombre">Nombre</label>
                     <input type="text" required class="form-control" value="<?php echo $txtNombre;?>" name="txtNombre" id="txtNombre" placeholder="Nombre del Producto">
                 </div>
-
                 <div class="form-group">
                     <label for="txtPrecio">Precio</label>
                     <input type="text" required class="form-control" value="<?php echo $txtPrecio;?>" name="txtPrecio" id="txtPrecio" placeholder="Precio del Producto">
                 </div>
-
                 <div class="form-group">
                     <label for="txtNombre">Imagen: </label>
-
                     <br/>
                     <?php   if($txtImagen!=""){     ?>
                             <img class="img-thumbnail rounded" src="../../img/<?php echo $txtImagen;?>" width="50" alt="" srcset="">
                     <?php    }      ?>
                     <input type="file" class="form-control" name="txtImagen" id="txtImagen" placeholder="Imagen">
                 </div>
-
                 <div class="btn-group" role="group" aria-label="">
                     <button type="submit" name="accion" <?php echo($accion=="Seleccionar")?"disabled":"";?> value="Agregar" class="btn btn-success">Agregar</button>
                     <button type="submit" name="accion" <?php echo($accion!="Seleccionar")?"disabled":"";?> value="Modificar" class="btn btn-warning">Modificar</button>
                     <button type="submit" name="accion" <?php echo($accion!="Seleccionar")?"disabled":"";?> value="Cancelar" class="btn btn-info">Cancelar</button>       <!--//Botones para hacer una sola opcion, o seleccionar -->
-                </div>
-                    
+                </div>      
             </form>
-        </div>
-                    
+        </div>             
     </div>
-
 </div>
 
 

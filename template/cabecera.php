@@ -1,11 +1,3 @@
-<?php error_reporting(E_ALL & ~E_WARNING);?>
-<?php 
-    include("./administrador/config/bd.php");
-    session_start();
-    $nombrePersona= $_SESSION["nombrePersona"];
-?>
-
-<?php $url="http://" .$_SERVER['HTTP_HOST']."/sitioWeb"?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,10 +9,12 @@
     <title>TESIP</title>
 
     <link rel="icon" type="image/x-icon" href="../img/favicon.ico">
-    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/cabecera.css"/>
     <link rel="stylesheet" href="../css/estilo.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 
 <body>
@@ -44,9 +38,7 @@
                 </ul>
                 <form class="d-flex" class="container">
                     <input class="form-control me-sm-2" type="search" placeholder="Buscar">
-                    <button class="btn btn-light my-2 my-sm-0" type="submit"><img width="20" src="img/buscar.jpg"></button>
-                    <a name="login" id="login" href="login.php" style="padding: 10px 25px 0px 25px; color:ghostwhite;" ><img width="25" src="img/usuario.jpg"> <?php echo $nombrePersona; ?></a>
-                    <a name="cerrado" id="cerrado" class="btn btn-dark my-2" href="<?php echo $url;?>/template/close.php" role="button">LogOut</a>
+                    <button class="btn btn-light my-2 my-sm-0" type="submit"><img width="20" src="img/buscar.jpg"></button>                    
                 </form>
             </div>
         </nav>

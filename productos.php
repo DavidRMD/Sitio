@@ -1,4 +1,133 @@
-<?php include("template/cabecera.php"); ?>
+<?php
+session_start();
+if(isset($_SESSION['carrito'])){
+    $carritoCompra = $_SESSION['carrito'];
+}
+if(isset($_SESSION['carrito'])){
+    for($i=0; $i<=count($carritoCompra)-1; $i ++){
+        if(isset($carritoCompra[$i])){
+            if($carritoCompra[$i]!= NULL){
+                if(!isset($carritoCompra['cantidad'])){
+                    $carritoCompra['cantidad']= '0';
+                }
+                else{
+                    $carritoCompra['cantidad'] = $carritoCompra['cantidad'];
+                }
+                $total_cantidad = $carritoCompra['cantidad'];
+                $total_cantidad ++;
+                if(!isset($totalcantidad)){
+                    $totalcantidad = '0';
+                }
+                else{
+                    $totalcantidad = $totalcantidad;
+                }
+                $totalcantidad += $total_cantidad;
+            }
+        }
+    }
+}
+if(!isset($totalcantidad)){
+    $totalcantidad = '';
+}
+else{
+    $totalcantidad = $totalcantidad;
+}
+?>
+<?php 
+    include("template/cabecera.php"); 
+?>
+<nav class= "navbar navbar-expand-lg navbar-dark" style="background-color: #112956;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Mi tienda</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toogle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="modal" data-bs-target="#modal_cart" style="color: red; cursor: pointer;"><i class="fas fa-shopping-cart"></i> <?php echo $totalcantidad; ?></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- MODAL CARRITO -->
+<div class="modal fade" id="modal_cart" tabindex="-1"  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Mi carrito</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+   
+   
+     
+			<div class="modal-body">
+				<div>
+					<div class="p-2">
+						<ul class="list-group mb-3">
+							<?php
+							if(isset($_SESSION['carrito'])){
+							$total=0;
+							for($i=0;$i<=count($carritoCompra)-1;$i ++){
+                                if(isset($carritoCompra[$i])){
+                                if($carritoCompra[$i]!=NULL){
+							?>
+							<li class="list-group-item d-flex justify-content-between lh-condensed">
+								<div class="row col-12" >
+									<div class="col-6 p-0" style="text-align: left; color: #000000;"><h6 class="my-0">Cantidad: <?php echo $carritoCompra[$i]['cantidad'] ?> : <?php echo $carritoCompra[$i]['nombre']; // echo substr($carrito_mio[$i]['titulo'],0,10); echo utf8_decode($titulomostrado)."..."; ?></h6>
+									</div>
+									<div class="col-6 p-0"  style="text-align: right; color: #000000;" >
+									<span class="text-muted"  style="text-align: right; color: #000000;"><?php echo $carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad'];    ?> €</span>
+									</div>
+								</div>
+							</li>
+							<?php
+							$total=$total + ($carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad']);
+							}
+                            }
+							}
+							}
+							?>
+							<li class="list-group-item d-flex justify-content-between">
+							<span  style="text-align: left; color: #000000;">Total (MX)</span>
+							<strong  style="text-align: left; color: #000000;"> $ <?php
+							if(isset($_SESSION['carrito'])){
+							$total=0;
+							for($i=0;$i<=count($carritoCompra)-1;$i ++){
+                                if(isset($carritoCompra[$i])){
+							if($carritoCompra[$i]!=NULL){ 
+							$total=$total + ($carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad']);
+                            }
+							}}}
+                            if(!isset($total)){$total = '0';}else{ $total = $total;}
+							echo $total; ?> </strong>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			
+
+
+      </div>
+      <div class="modal-footer">
+     
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <a type="button" class="btn btn-primary" href="borrarcarro.php">Vaciar carrito</a>
+        <a type="button" class="btn btn-success" href="../Carrito de compra paso 2/index.php">Continuar pedido</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END MODAL CARRITO -->
+
+<?php
+    //include("nav_cart.php");
+    //include("modal_cart.php")
+?>
 
 <?php 
 include("administrador/config/bd.php");
@@ -6,19 +135,6 @@ $sentenciaSQL = $conexion->prepare("SELECT * FROM productos");
 $sentenciaSQL->execute();
 $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
-<script>
-    const btnAbrirModal = document.querySelector("#btn-abrir-modal");
-    const btnCerrarModal =document.querySelector("#btn-cerrar-modal");
-    const modal =document.querySelector("#modal");
-
-    btnAbrirModal.addEventListener("click", ()=>{
-        modal.showModal();
-    })
-    btnCerrarModal.addEventListener("click", ()=>{
-        modal.close();
-    })
-</script>
 
 <section class="informacion">
     <div class="container">
@@ -100,22 +216,33 @@ $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 
 <section class="productos">
     <div class="container">
-    <h2 style="text-align: center;">Componentes electronicos</h2><br></br>
+        <h2 style="text-align: center;">Componentes electronicos</h2><br></br>
         <h3 style="text-align: center">Escoge los productos que necesitas de nuestra gran variedad de componentes electronicos</h3><br><br>
+        <?php $busqueda = mysqli_query($conect, "SELECT * FROM productos");
+        $numero = mysqli_num_rows($busqueda);?>
+        <h5>Resultados (<?php echo $numero; ?>)</h5>
         <div class="row">
-            <?php foreach($listaProductos as $productos){  ?>
+            <?php while($productos = mysqli_fetch_assoc($busqueda)){ ?>
                 <div class="col-md-3">
-                    <div class="card">
-                        <img class="card-img-top" src="./img/<?php echo $productos['imagen'];?>" alt="producto"">
-                        <div class="card-body">
-                            <h4 class="card-title">     <?php echo $productos['nombre'];?>   </h4>
-                            <h4 class="card-title">     <?php echo $productos['precio'];?>   </h4>
-                            <a name="" id="" class="btn btn-primary" href="item.php" role="button">Ver más</a>
-                        </div>                       
-                    </div>
+                    <form id="formulario" name="formulario" method="post" action="cart.php"> 
+                        <div class="card">
+                            <img class="card-img-top" src="./img/<?php echo $productos['imagen'];?>" alt="producto">
+                            <input name="precio" type="hidden" id="precio" value="<?php echo $productos['precio'];  ?>"/>
+                            <input name="nombre" type="hidden" id="nombre" value="<?php echo $productos['nombre'];  ?>"/>
+                            <input name="cantidad" type="hidden" id="cantidad" value="1" class="pl-2"/> 
+                            <div class="card-body">
+                                <h4 class="card-title">     <?php echo $productos['nombre'];?>   </h4>
+                                <h4 class="card-title">    $ <?php echo $productos['precio'];?> pz MX  </h4>
+                                <button class="btn btn-primary" type="submit"><i class="fas fa-shopping-cart"></i>Añadir al carrito</button> 
+                                <!--<a name="" id="" class="btn btn-primary" href="item.php" role="button">Ver más</a>-->
+                            </div>                       
+                        </div>
+                        
+                    </form>
                 </div>
             <?php }?>
         </div>
     </div>
+    <a name="CarritoCompra" class="btn btn-success" href="./pruebas/modal_cart.php" target="_blank" role="button" style="padding: 12px 18px 11px 18px;"><h5><strong>Carrito de Compra</strong></h5></a>
 </section>
 <?php include("template/pie.php"); ?>
