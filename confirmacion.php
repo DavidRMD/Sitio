@@ -134,78 +134,93 @@ else{
 @media screen and (max-width: 600px) {    .container_card{        grid-template-columns: 1fr;        grid-row-gap: 60px;    }}
 </style>
 
-    <main>
-        <div class="center mt-5">
-            <div class="card pt-3" >
-                <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">Mi pedido</p>
-                <div class="container-fluid p-2">
-                    <table class="table">
-                        <thead>
+<main>
+    <div class="center mt-5">
+        <div class="card pt-3" >
+            <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">Mi pedido</p>
+            <div class="container-fluid p-2">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Imagen</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Artículo</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Borrar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <div class="container_card"><?php
+                            if(isset($_SESSION['carrito'])){
+                                $total=0;
+                                for($i=0;$i<=count($carritoCompra)-1;$i ++){
+                                    if(isset($carritoCompra[$i])){
+                                        if($carritoCompra[$i]!=NULL){
+                            ?>
+                            <?php if ($carritoCompra[$i]['imagen'] != 'portes'){ ?>
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Imagen</th>
-                                <th scope="col">Cantidad</th>
-                                <th scope="col">Artículo</th>
-                                <th scope="col">Precio</th>
-                                <th scope="col">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <div class="container_card"><?php
-                                if(isset($_SESSION['carrito'])){
-                                    $total=0;
-                                    for($i=0;$i<=count($carritoCompra)-1;$i ++){
-                                        if(isset($carritoCompra[$i])){
-                                            if($carritoCompra[$i]!=NULL){?>
-                                <?php if ($carritoCompra[$i]['imagen'] != 'portes'){ ?>
-                                <tr>
-                                    <th scope="row" style="vertical-align: middle;"><?php echo $i +1; ?></th>
-                                        <td><img src="./img/<?php echo $carritoCompra[$i]['imagen']; ?>" alt="<?php echo $carritoCompra[$i]['nombre']; ?>" width="100px"></td>
-                                        <td style="vertical-align: middle;"><?php echo $carritoCompra[$i]['cantidad'] ?></td>
-                                        <td style="vertical-align: middle;"><?php echo $carritoCompra[$i]['nombre'] ?></td>
-                                        <td style="vertical-align: middle;"> $<?php echo $carritoCompra[$i]['precio'] ?></td>
-                                        <td style="vertical-align: middle;"> $<?php echo $carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad']; ?> </td>
-                                </tr>    
-                                <?php } ?>
-                                <?php
-                                $total=$total + ($carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad']);
-                                }
-                            }
+                                <th scope="row" style="vertical-align: middle;"><?php echo $i + 1; ?></th>
+                                <td>
+                                    <img src="./img/<?php echo $carritoCompra[$i]['imagen']; ?>" alt="<?php echo $carritoCompra[$i]['nombre']; ?>" width="100px">
+                                </td>
+                                <td style="vertical-align: middle;">
+                                    <form id="form2" name="form1" method="post" action="cart.php">
+                                        <input name="id" type="hidden" id="id" value="<?php print $i;   ?>" class="align-middle" />
+                                        <input  name="cantidad" type="text" id="cantidad" style="width:50px;" class="align-middle text-center"   value="<?php print $carritoCompra[$i]['cantidad'];   ?>" size="1" maxlength="4"  />
+                                        <input  type="image" name="imageField3" src="./img/actualiza.jpg" width="38" value="" class="btn btn-sm btn-primary btn-rounded" />
+                                    </form>   
+                                </td>
+                                <td style="vertical-align: middle;"><?php echo $carritoCompra[$i]['nombre'] ?></td>
+                                <td style="vertical-align: middle;"> $ <?php echo $carritoCompra[$i]['precio'] ?></td>
+                                <td style="vertical-align: middle;"> $ <?php echo $carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad']; ?></td>
+                                <td style="vertical-align: middle;">
+                                    <form id="form3" name="form2" method="post" action="cart.php">
+                                        <input name="id2" type="hidden" id="id2" value="<?php print $i;   ?>" />
+                                        <button type="image" name="imageField3"class="btn-lg bg-danger text-white " style="border:0px;" data-toggle="tooltip" data-placement="top" title="Remove item"><i class="fas fa-trash-alt"></i> Borrar</button>
+                                    </form>
+                                </td>
+                            </tr>    
+                            <?php } ?>
+                            <?php
+							$total=$total + ($carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad']);
+							}
                         }
-                    }?>
+					}
+				}
+			?>
 
                         </tbody>
                     </table>
                     <li class="list-group-item d-flex justify-content-between">
-                        <span  style="text-align: left; color: #000000;"><strong>Total (MX)</strong></span>
-                        <strong  style="text-align: left; color: #000000;"><?php
-                        if(isset($_SESSION['carrito'])){
-                            $total=0;
-                            for($i=0;$i<=count($carritoCompra)-1;$i ++){
-                                if(isset($carritoCompra[$i])){
-                                    if($carritoCompra[$i]!=NULL){ 
-                                        $total=$total + ($carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad']);
-                                    }
+						<span  style="text-align: left; color: #000000;"><strong>Total (MX)</strong></span>
+						<strong  style="text-align: left; color: #000000;"><?php
+						    if(isset($_SESSION['carrito'])){
+							    $total=0;
+							    for($i=0;$i<=count($carritoCompra)-1;$i ++){
+                                    if(isset($carritoCompra[$i])){
+							            if($carritoCompra[$i]!=NULL){ 
+							                $total=$total + ($carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad']);
+                                        }
+							        }
                                 }
                             }
-                        }
-                        if(!isset($total)){
-                            $total = '0';
-                        }
-                        else{ 
-                            $total = $total;
-                        }
-                        echo number_format($total, 2, ',', '.');  ?> €</strong>
-                    </li>
+                            if(!isset($total)){
+                                $total = '0';
+                            }
+                            else{ 
+                                $total = $total;
+                            }
+						echo number_format($total, 2, ',', '.'); ?> €</strong>
+					</li>
                 </div>
             </div>
-        <a type="button" class="btn btn-success my-4" href="confirmacion.php">Continuar pedido</a>
+            <a type="button" class="btn btn-success my-4" href="envio.php">Continuar pedido</a>
+        </div>
     </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" ></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" ></script>
 </main>
 
 <?php include("template/pie.php");?>

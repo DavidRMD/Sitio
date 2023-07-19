@@ -1,5 +1,8 @@
 <?php
 session_start();
+
+include("./administrador/config/bd.php");
+
 if(isset($_SESSION['carrito'])){
     $carritoCompra = $_SESSION['carrito'];
 }
@@ -134,77 +137,53 @@ else{
 @media screen and (max-width: 600px) {    .container_card{        grid-template-columns: 1fr;        grid-row-gap: 60px;    }}
 </style>
 
-    <main>
-        <div class="center mt-5">
-            <div class="card pt-3" >
-                <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">Mi pedido</p>
+<main>
+    <div class="center mt-5">
+        <div class="card pt-3" >
+                <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">Mis pedidos</p>
                 <div class="container-fluid p-2">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Imagen</th>
-                                <th scope="col">Cantidad</th>
-                                <th scope="col">Artículo</th>
-                                <th scope="col">Precio</th>
-                                <th scope="col">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <div class="container_card"><?php
-                                if(isset($_SESSION['carrito'])){
-                                    $total=0;
-                                    for($i=0;$i<=count($carritoCompra)-1;$i ++){
-                                        if(isset($carritoCompra[$i])){
-                                            if($carritoCompra[$i]!=NULL){?>
-                                <?php if ($carritoCompra[$i]['imagen'] != 'portes'){ ?>
-                                <tr>
-                                    <th scope="row" style="vertical-align: middle;"><?php echo $i +1; ?></th>
-                                        <td><img src="./img/<?php echo $carritoCompra[$i]['imagen']; ?>" alt="<?php echo $carritoCompra[$i]['nombre']; ?>" width="100px"></td>
-                                        <td style="vertical-align: middle;"><?php echo $carritoCompra[$i]['cantidad'] ?></td>
-                                        <td style="vertical-align: middle;"><?php echo $carritoCompra[$i]['nombre'] ?></td>
-                                        <td style="vertical-align: middle;"> $<?php echo $carritoCompra[$i]['precio'] ?></td>
-                                        <td style="vertical-align: middle;"> $<?php echo $carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad']; ?> </td>
-                                </tr>    
-                                <?php } ?>
+                        <table class="table">
+                                <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Ref</th>
+                                            <th scope="col">Cliente</th>
+                                            <th scope="col">Total</th>
+                                            <th scope="col">Estado</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
                                 <?php
-                                $total=$total + ($carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad']);
-                                }
-                            }
-                        }
-                    }?>
+$busqueda=mysqli_query($conect,"SELECT t.ref, t.estado, t.medio, t.total, t2.cantidad, t2.articulo, t2.precio, t2.total AS 'total_precio', t3.nombre 
+FROM programaciononline.pedidocp t
+LEFT JOIN programaciononline.pedidodatos t2 ON t.ref = t2.ref
+LEFT JOIN programaciononline.pedidocliente t3 ON t.cliente = t3.ref
+GROUP BY t.ref
+"); 
+                                $numero = mysqli_num_rows($busqueda); ?>
+                                        <h5 class="card-tittle">Resultados (<?php echo $numero; ?>)</h5>
+                                        <div class="container_card">
+                                                <?php 
+                                                $num = '0';
+                                                while ($resultado = mysqli_fetch_assoc($busqueda)){
+                                                $num++;
+                                                ?>
+                                                        <tr onclick="location.href='../Carrito de compra paso 7/index.php?dat=<?php echo $resultado['ref']; ?>'" style="cursor: pointer;">
+                                                        <th scope="row"><?php echo $num; ?></th>
+                                                        <td><?php echo $resultado["ref"]; ?></td>
+                                                        <td><?php echo $resultado["nombre"]; ?></td>
+                                                        <td><?php echo $resultado["total"]; ?> €</td>
+                                                        <td><?php echo $resultado["estado"]; ?></td>
+                                                        </tr>    
 
-                        </tbody>
-                    </table>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span  style="text-align: left; color: #000000;"><strong>Total (MX)</strong></span>
-                        <strong  style="text-align: left; color: #000000;"><?php
-                        if(isset($_SESSION['carrito'])){
-                            $total=0;
-                            for($i=0;$i<=count($carritoCompra)-1;$i ++){
-                                if(isset($carritoCompra[$i])){
-                                    if($carritoCompra[$i]!=NULL){ 
-                                        $total=$total + ($carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad']);
-                                    }
-                                }
-                            }
-                        }
-                        if(!isset($total)){
-                            $total = '0';
-                        }
-                        else{ 
-                            $total = $total;
-                        }
-                        echo number_format($total, 2, ',', '.');  ?> €</strong>
-                    </li>
+                                                <?php } ?>
+                                        </div>
+                                </tbody>
+                        </table>
                 </div>
-            </div>
-        <a type="button" class="btn btn-success my-4" href="confirmacion.php">Continuar pedido</a>
-    </div>
+        </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" ></script>
 
 </main>
 

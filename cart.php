@@ -26,7 +26,36 @@ if(isset($_SESSION['carrito']) || isset($_POST['nombre'])){
         $img    = $_POST['imagen'];
         $carritoCompra[] = array("nombre"=>$nombre, "precio"=>$precio, "cantidad"=>$cantidad, "imagen"=>$img);      
     }
+    if(isset($_POST['cantidad'])){
+        $id= $_POST['id'];
+        $cuantos= $_POST['cantidad'];
+        if($cuantos<1){
+            $carritoCompra[$id]= NULL;
+        }
+        else{
+            $carritoCompra[$id]['cantidad']=$cuantos;
+        }
+    }
+    if(isset($_POST['id2'])){
+        $id=$_POST['id2'];
+		$carritoCompra[$id]=NULL;
+    }
     $_SESSION['carrito']=$carritoCompra;
 }
+if(isset($_SESSION['carrito'])){
+    for($i=0;$i<=count($carritoCompra)-1;$i ++){
+        if($carritoCompra[$i]!=NULL){ 
+            $totalc = $carritoCompra['cantidad'];
+            $totalc ++ ;
+            $totalcantidad += $totalc;
+        }
+    }
+}
+
+
+if ($_POST["imagen"] == 'portes'){
+	header("Location: pago.php");
+}else{
 header("Location: ".$_SERVER['HTTP_REFERER']."");
+}
 ?>

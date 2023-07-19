@@ -80,7 +80,7 @@ else{
 									<div class="col-6 p-0" style="text-align: left; color: #000000;"><h6 class="my-0">Cantidad: <?php echo $carritoCompra[$i]['cantidad'] ?> : <?php echo $carritoCompra[$i]['nombre']; // echo substr($carrito_mio[$i]['titulo'],0,10); echo utf8_decode($titulomostrado)."..."; ?></h6>
 									</div>
 									<div class="col-6 p-0"  style="text-align: right; color: #000000;" >
-									<span class="text-muted"  style="text-align: right; color: #000000;"><?php echo $carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad'];    ?> €</span>
+									<span class="text-muted"  style="text-align: right; color: #000000;"> $ <?php echo $carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad'];    ?> </span>
 									</div>
 								</div>
 							</li>

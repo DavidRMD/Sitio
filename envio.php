@@ -134,78 +134,67 @@ else{
 @media screen and (max-width: 600px) {    .container_card{        grid-template-columns: 1fr;        grid-row-gap: 60px;    }}
 </style>
 
-    <main>
-        <div class="center mt-5">
-            <div class="card pt-3" >
-                <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">Mi pedido</p>
-                <div class="container-fluid p-2">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Imagen</th>
-                                <th scope="col">Cantidad</th>
-                                <th scope="col">Artículo</th>
-                                <th scope="col">Precio</th>
-                                <th scope="col">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <div class="container_card"><?php
-                                if(isset($_SESSION['carrito'])){
-                                    $total=0;
-                                    for($i=0;$i<=count($carritoCompra)-1;$i ++){
-                                        if(isset($carritoCompra[$i])){
-                                            if($carritoCompra[$i]!=NULL){?>
-                                <?php if ($carritoCompra[$i]['imagen'] != 'portes'){ ?>
-                                <tr>
-                                    <th scope="row" style="vertical-align: middle;"><?php echo $i +1; ?></th>
-                                        <td><img src="./img/<?php echo $carritoCompra[$i]['imagen']; ?>" alt="<?php echo $carritoCompra[$i]['nombre']; ?>" width="100px"></td>
-                                        <td style="vertical-align: middle;"><?php echo $carritoCompra[$i]['cantidad'] ?></td>
-                                        <td style="vertical-align: middle;"><?php echo $carritoCompra[$i]['nombre'] ?></td>
-                                        <td style="vertical-align: middle;"> $<?php echo $carritoCompra[$i]['precio'] ?></td>
-                                        <td style="vertical-align: middle;"> $<?php echo $carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad']; ?> </td>
-                                </tr>    
-                                <?php } ?>
-                                <?php
-                                $total=$total + ($carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad']);
-                                }
-                            }
-                        }
-                    }?>
-
-                        </tbody>
-                    </table>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span  style="text-align: left; color: #000000;"><strong>Total (MX)</strong></span>
-                        <strong  style="text-align: left; color: #000000;"><?php
-                        if(isset($_SESSION['carrito'])){
-                            $total=0;
-                            for($i=0;$i<=count($carritoCompra)-1;$i ++){
-                                if(isset($carritoCompra[$i])){
-                                    if($carritoCompra[$i]!=NULL){ 
-                                        $total=$total + ($carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad']);
-                                    }
-                                }
-                            }
-                        }
-                        if(!isset($total)){
-                            $total = '0';
-                        }
-                        else{ 
-                            $total = $total;
-                        }
-                        echo number_format($total, 2, ',', '.');  ?> €</strong>
-                    </li>
+<main>
+    <div class="center mt-5">
+        <div class="card pt-3" >
+            <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">Metodos de envio o entrega</p>
+            <div class="container-fluid p-2">              
+                <div class="container_card">
+                    <form id="formulario" name="formulario" method="post" action="cart.php">
+                        <div class="blog-post ">
+                            <img src="./img/dron.jpg" alt="Man">
+                            <a target="_blank" class="category">$ 20.00 </a>
+                            <div class="text-content">
+                                <input name="imagen" type="hidden" id="imagen" value="portes" />                           
+                                <input name="precio" type="hidden" id="precio" value="20" />
+                                <input name="nombre" type="hidden" id="nombre" value="Metodo de envio: Dron 1" />
+                                <input name="cantidad" type="hidden" id="cantidad" value="1" class="pl-2" />
+                                <div class="card-body">
+                                    <h5 class="card-title">Dron de Envio</h5>
+                                    <p>24h.</p>
+                                    <button class="btn btn-primary" type="submit" ><i class="fas fa-shopping-cart"></i> Seleccionar envio</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form id="formulario" name="formulario" method="post" action="cart.php">
+                        <div class="blog-post ">
+                            <img src="./img/caminando.jpg" alt="Man">
+                            <a target="_blank" class="category"> $ 10.00 </a>
+                            <div class="text-content">
+                                <input name="imagen" type="hidden" id="imagen" value="portes" />                           
+                                <input name="precio" type="hidden" id="precio" value="10" />
+                                <input name="nombre" type="hidden" id="nombre" value="Metodo de envio: Persona 2" />
+                                <input name="cantidad" type="hidden" id="cantidad" value="1" class="pl-2" />
+                                <div class="card-body">
+                                    <h5 class="card-title">Persona de enviada</h5>
+                                    <p>48h.</p>
+                                    <button class="btn btn-primary" type="submit" ><i class="fas fa-shopping-cart"></i> Seleccionar envio</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form id="formulario" name="formulario" method="post" action="cart.php">
+                        <div class="blog-post ">
+                            <img src="./img/local.jpg" alt="Man">
+                            <a target="_blank" class="category">GRATIS</a>
+                            <div class="text-content">
+                                <input name="imagen" type="hidden" id="imagen" value="portes" />                           
+                                <input name="precio" type="hidden" id="precio" value="0" />
+                                <input name="nombre" type="hidden" id="nombre" value="Metodo de envio: Entrega local 3" />
+                                <input name="cantidad" type="hidden" id="cantidad" value="1" class="pl-2" />
+                                <div class="card-body">
+                                    <h5 class="card-title">Entrega en el local</h5>
+                                    <p>72h.</p>
+                                    <button class="btn btn-primary" type="submit" ><i class="fas fa-shopping-cart"></i> Seleccionar envio</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        <a type="button" class="btn btn-success my-4" href="confirmacion.php">Continuar pedido</a>
+        </div>
     </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" ></script>
-
 </main>
 
 <?php include("template/pie.php");?>

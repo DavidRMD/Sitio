@@ -40,7 +40,6 @@
                         <h1 class="display-3">Bienvenidos</h1>
                         <p class="lead">Consulta los componentes que necesitas</p><br>
                         <hr class="my-2">
-
                         <img width="400" src="img/tesip2.jpg" class="img-tumbnail rounded mx-auto d-block" >
 
                         <p>Mas información</p>
