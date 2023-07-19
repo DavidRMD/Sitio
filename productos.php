@@ -109,25 +109,18 @@ else{
 					</div>
 				</div>
 			</div>
-			
-
-
-      </div>
-      <div class="modal-footer">
-     
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <a type="button" class="btn btn-primary" href="borrarcarro.php">Vaciar carrito</a>
-        <a type="button" class="btn btn-success" href="../Carrito de compra paso 2/index.php">Continuar pedido</a>
-      </div>
+        </div>
+        <div class="modal-footer">        
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <a type="button" class="btn btn-primary" href="borrarcarro.php">Vaciar carrito</a>
+            <a type="button" class="btn btn-success" href="item.php" target="_blank" >Continuar pedido</a>
+        </div>
     </div>
   </div>
 </div>
-<!-- END MODAL CARRITO -->
 
-<?php
-    //include("nav_cart.php");
-    //include("modal_cart.php")
-?>
+
+<?php //include("nav_cart.php"); //include("modal_cart.php")?>
 
 <?php 
 include("administrador/config/bd.php");
@@ -227,6 +220,7 @@ $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
                     <form id="formulario" name="formulario" method="post" action="cart.php"> 
                         <div class="card">
                             <img class="card-img-top" src="./img/<?php echo $productos['imagen'];?>" alt="producto">
+                            <input name="imagen" type="hidden" id="imagen" value="<?php echo $productos['imagen'];  ?>"/>
                             <input name="precio" type="hidden" id="precio" value="<?php echo $productos['precio'];  ?>"/>
                             <input name="nombre" type="hidden" id="nombre" value="<?php echo $productos['nombre'];  ?>"/>
                             <input name="cantidad" type="hidden" id="cantidad" value="1" class="pl-2"/> 
@@ -234,15 +228,15 @@ $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
                                 <h4 class="card-title">     <?php echo $productos['nombre'];?>   </h4>
                                 <h4 class="card-title">    $ <?php echo $productos['precio'];?> pz MX  </h4>
                                 <button class="btn btn-primary" type="submit"><i class="fas fa-shopping-cart"></i>Añadir al carrito</button> 
-                                <!--<a name="" id="" class="btn btn-primary" href="item.php" role="button">Ver más</a>-->
                             </div>                       
                         </div>
-                        
                     </form>
                 </div>
             <?php }?>
         </div>
     </div>
-    <a name="CarritoCompra" class="btn btn-success" href="./pruebas/modal_cart.php" target="_blank" role="button" style="padding: 12px 18px 11px 18px;"><h5><strong>Carrito de Compra</strong></h5></a>
+    <div class="container">
+        <br><hr><a name="CarritoCompra" class="btn btn-success" href="modal_cart.php" target="_blank" role="button" style="padding: 12px 18px 11px 18px;"><h5><strong>Carrito de Compra</strong></h5></a>
+    </div>
 </section>
 <?php include("template/pie.php"); ?>

@@ -1,50 +1,211 @@
 <?php
-    include("administrador/config/bd.php");
-
-    $sentenciaSQL = $conexion->prepare("SELECT * FROM libros");
-    $sentenciaSQL->execute();
-    $listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
-
-    include("template/cabecera.php");
+session_start();
+if(isset($_SESSION['carrito'])){
+    $carritoCompra = $_SESSION['carrito'];
+}
+if(isset($_SESSION['carrito'])){
+    for($i=0; $i<=count($carritoCompra)-1; $i ++){
+        if(isset($carritoCompra[$i])){
+            if($carritoCompra[$i]!= NULL){
+                if(!isset($carritoCompra['cantidad'])){
+                    $carritoCompra['cantidad']= '0';
+                }
+                else{
+                    $carritoCompra['cantidad'] = $carritoCompra['cantidad'];
+                }
+                $total_cantidad = $carritoCompra['cantidad'];
+                $total_cantidad ++;
+                if(!isset($totalcantidad)){
+                    $totalcantidad = '0';
+                }
+                else{
+                    $totalcantidad = $totalcantidad;
+                }
+                $totalcantidad += $total_cantidad;
+            }
+        }
+    }
+}
+if(!isset($totalcantidad)){
+    $totalcantidad = '';
+}
+else{
+    $totalcantidad = $totalcantidad;
+}
 ?>
-
-    <main>
-    <ul class="nav nav-tabs" role="tablist">
-  <li class="nav-item" role="presentation">
-    <a class="nav-link" data-bs-toggle="tab" href="#home" aria-selected="false" role="tab" tabindex="-1">Home</a>
-  </li>
-  <li class="nav-item" role="presentation">
-    <a class="nav-link active" data-bs-toggle="tab" href="#profile" aria-selected="true" role="tab">Profile</a>
-  </li>
-  <li class="nav-item" role="presentation">
-    <a class="nav-link disabled" href="#" aria-selected="false" tabindex="-1" role="tab">Disabled</a>
-  </li>
-  <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle show" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Dropdown</a>
-    <div class="dropdown-menu show" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 44px);" data-popper-placement="bottom-start">
-      <a class="dropdown-item" href="#">Action</a>
-      <a class="dropdown-item" href="#">Another action</a>
-      <a class="dropdown-item" href="#">Something else here</a>
-      <div class="dropdown-divider"></div>
-      <a class="dropdown-item" href="#">Separated link</a>
+<?php 
+    include("template/cabecera.php"); 
+?>
+<nav class= "navbar navbar-expand-lg navbar-dark" style="background-color: #112956;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Mi tienda</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toogle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="modal" data-bs-target="#modal_cart" style="color: red; cursor: pointer;"><i class="fas fa-shopping-cart"></i> <?php echo $totalcantidad; ?></a>
+                </li>
+            </ul>
+        </div>
     </div>
-  </li>
-</ul>
-<div id="myTabContent" class="tab-content">
-  <div class="tab-pane fade" id="home" role="tabpanel">
-    <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
-  </div>
-  <div class="tab-pane fade active show" id="profile" role="tabpanel">
-    <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
-  </div>
-  <div class="tab-pane fade" id="dropdown1">
-    <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.</p>
-  </div>
-  <div class="tab-pane fade" id="dropdown2">
-    <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater.</p>
+</nav>
+
+<!-- MODAL CARRITO -->
+<div class="modal fade" id="modal_cart" tabindex="-1"  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Mi carrito</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+   
+   
+     
+			<div class="modal-body">
+				<div>
+					<div class="p-2">
+						<ul class="list-group mb-3">
+							<?php
+							if(isset($_SESSION['carrito'])){
+							$total=0;
+							for($i=0;$i<=count($carritoCompra)-1;$i ++){
+                                if(isset($carritoCompra[$i])){
+                                if($carritoCompra[$i]!=NULL){
+							?>
+							<li class="list-group-item d-flex justify-content-between lh-condensed">
+								<div class="row col-12" >
+									<div class="col-6 p-0" style="text-align: left; color: #000000;"><h6 class="my-0">Cantidad: <?php echo $carritoCompra[$i]['cantidad'] ?> : <?php echo $carritoCompra[$i]['nombre']; // echo substr($carrito_mio[$i]['titulo'],0,10); echo utf8_decode($titulomostrado)."..."; ?></h6>
+									</div>
+									<div class="col-6 p-0"  style="text-align: right; color: #000000;" >
+									<span class="text-muted"  style="text-align: right; color: #000000;"><?php echo $carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad'];    ?> €</span>
+									</div>
+								</div>
+							</li>
+							<?php
+							$total=$total + ($carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad']);
+							}
+                            }
+							}
+							}
+							?>
+							<li class="list-group-item d-flex justify-content-between">
+							<span  style="text-align: left; color: #000000;">Total (MX)</span>
+							<strong  style="text-align: left; color: #000000;"> $ <?php
+							if(isset($_SESSION['carrito'])){
+							$total=0;
+							for($i=0;$i<=count($carritoCompra)-1;$i ++){
+                                if(isset($carritoCompra[$i])){
+							if($carritoCompra[$i]!=NULL){ 
+							$total=$total + ($carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad']);
+                            }
+							}}}
+                            if(!isset($total)){$total = '0';}else{ $total = $total;}
+							echo $total; ?> </strong>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+        </div>
+        <div class="modal-footer">        
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <a type="button" class="btn btn-primary" href="borrarcarro.php">Vaciar carrito</a>
+            <a type="button" class="btn btn-success" href="../Carrito de compra paso 2/index.php">Continuar pedido</a>
+        </div>
+    </div>
   </div>
 </div>
 
-    </main>
+
+<style>
+.container_card{    margin: 0 auto;    padding:  0px 20px 20px 20px;    display: grid;    /* width: 800px; */    grid-template-columns: 1fr 1fr ;   grid-gap:1em;        /* grid-row-gap: 60px; */}
+.blog-post{    position: relative;    margin-bottom: 15px;    margin: 30px;}
+.blog-post img{    width: 100%;    height: 450px;    object-fit: cover;    border-radius: 10px;    }
+.blog-post .category{    position: absolute;    top: 20px;    left: 20px;    padding: 10px 15px;  font-size: 14px;    text-decoration: none;    background-color: #e67e22;    color: #fff;    border-radius: 5px;    box-shadow: 1px 1px 8px rgba(0,0,0,0.1);    text-transform: uppercase;}
+.text-content{    position: absolute;    bottom: -30px;    padding: 20px;    background-color: #fff;    width: calc(100% - 20px);    left: 50%;    transform: translateX(-50%);    border-radius: 10px;    box-shadow: 1px 1px 8px rgba(0,0,0,0.08);/* padding-top: 50px; */}
+.text-content h2{    font-size: 20px;    font-weight: 400;    /* margin-bottom: 30px; */}
+.text-content img{    height: 70px;    width: 70px;    border: 5px solid rgba(0,0,0,0.1);    border-radius: 50%;    position: absolute;    top: -35px;    left: 35px;}
+.tags a{    color: #888;    font-weight: 700;    text-decoration: none;    margin-right: 15px;    transition: 0.3s ease;}
+.tags a:hover{    color: #000;}
+@media screen and (max-width: 1100px) {    .container_card{        grid-template-columns: 1fr 1fr;        grid-row-gap: 60px;    }}
+@media screen and (max-width: 600px) {    .container_card{        grid-template-columns: 1fr;        grid-row-gap: 60px;    }}
+</style>
+
+    <main>
+        <div class="center mt-5">
+            <div class="card pt-3" >
+                <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">Mi pedido</p>
+                <div class="container-fluid p-2">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Imagen</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">Artículo</th>
+                                <th scope="col">Precio</th>
+                                <th scope="col">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <div class="container_card"><?php
+                                if(isset($_SESSION['carrito'])){
+                                    $total=0;
+                                    for($i=0;$i<=count($carritoCompra)-1;$i ++){
+                                        if(isset($carritoCompra[$i])){
+                                            if($carritoCompra[$i]!=NULL){?>
+                                <?php if ($carritoCompra[$i]['imagen'] != 'portes'){ ?>
+                                <tr>
+                                    <th scope="row" style="vertical-align: middle;"><?php echo $i +1; ?></th>
+                                        <td><img src="/img/<?php echo $carritoCompra[$i]['imagen']; ?>" alt="<?php echo $carritoCompra[$i]['nombre'] ?>"></td>
+                                        <td style="vertical-align: middle;"><?php echo $carritoCompra[$i]['cantidad'] ?></td>
+                                        <td style="vertical-align: middle;"><?php echo $carritoCompra[$i]['nombre'] ?></td>
+                                        <td style="vertical-align: middle;"> $<?php echo $carritoCompra[$i]['precio'] ?></td>
+                                        <td style="vertical-align: middle;"> $<?php echo $carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad']; ?> </td>
+                                </tr>    
+                                <?php } ?>
+                                <?php
+                                $total=$total + ($carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad']);
+                                }
+                            }
+                        }
+                    }?>
+
+                        </tbody>
+                    </table>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span  style="text-align: left; color: #000000;"><strong>Total (MX)</strong></span>
+                        <strong  style="text-align: left; color: #000000;"><?php
+                        if(isset($_SESSION['carrito'])){
+                            $total=0;
+                            for($i=0;$i<=count($carritoCompra)-1;$i ++){
+                                if(isset($carritoCompra[$i])){
+                                    if($carritoCompra[$i]!=NULL){ 
+                                        $total=$total + ($carritoCompra[$i]['precio'] * $carritoCompra[$i]['cantidad']);
+                                    }
+                                }
+                            }
+                        }
+                        if(!isset($total)){
+                            $total = '0';
+                        }
+                        else{ 
+                            $total = $total;
+                        }
+                        echo number_format($total, 2, ',', '.');  ?> €</strong>
+                    </li>
+                </div>
+            </div>
+        <a type="button" class="btn btn-success my-4" href="../Carrito de compra paso 3/index.php">Continuar pedido</a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" ></script>
+
+</main>
 
 <?php include("template/pie.php");?>
